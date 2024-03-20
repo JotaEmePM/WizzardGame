@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System.Collections.Generic;
 
 namespace Wizzard.Engine
 {
@@ -8,15 +9,23 @@ namespace Wizzard.Engine
         private Color color;
         private Texture2D rectangle;
 
+        private static GameConsole instance;
+
+        private List<string> lines = new();
+
+
         public bool Enabled { get; set; }
         public bool Visible { get; set; }
 
         public GameConsole(bool enable)
         {
-            Enabled = enable;
-            Visible = false;
+            if (instance == null)
+            {
+                instance = this;
 
-            
+                Enabled = enable;
+                Visible = false;
+            }
         }
 
         public void Load()
@@ -46,13 +55,28 @@ namespace Wizzard.Engine
             if (Visible)
             {
                 // Draw a gray rectangle
-                Globals.Globals.SpriteBatch.Draw(rectangle, new Rectangle(10, 20, 80, 30), Color.Chocolate);
+                Globals.Globals.SpriteBatch.Draw(rectangle, new Rectangle(10, 20,
+                    Globals.Globals.GraphicsDevice.Viewport.Width - 20, 200),
+                    Color.Gray * 0.5f);
             }
         }
 
         public void Update(GameTime gameTime)
         {
 
+        }
+
+        public static GameConsole GetInstance()
+        {
+            return instance;
+        }
+
+        public static void WriteLine(string text)
+        {
+            if (instance != null)
+            {
+                instance.lines.Add(text);
+            }
         }
     }
 }

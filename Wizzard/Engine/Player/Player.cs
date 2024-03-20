@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
+using Wizzard.Engine.Input;
 
 namespace Wizzard.Engine.Player
 {
@@ -46,10 +47,10 @@ namespace Wizzard.Engine.Player
         public List<Animation> Animations;
         public Animation CurrentAnimation;
 
-
+        UserInputController UserInput;
         public PlayerState CurrentState { get; set; }
         private Vector2 Position { get; set; }
-
+        private bool InMovement = false;
 
 
         public Player(string name, Job job)
@@ -62,7 +63,50 @@ namespace Wizzard.Engine.Player
             SetupAnimations();
 
             this.Position = new Vector2(50, 50);
+
+            SetupController();
         }
+
+        public void SetupController()
+        {
+            UserInput = new UserInputController();
+            UserInput.RegisterKeyPressAction(Keys.W, MoveUp);
+            UserInput.RegisterKeyPressAction(Keys.A, MoveLeft);
+            UserInput.RegisterKeyPressAction(Keys.S, MoveDown);
+            UserInput.RegisterKeyPressAction(Keys.D, MoveRight);
+        }
+
+        public void MoveUp()
+        {
+            this.Position = new Vector2(this.Position.X, this.Position.Y - 1);
+            this.CurrentState = PlayerState.WalkUp;
+            ChangeAnimation("Walk");
+        }
+
+        public void MoveDown()
+        {
+            this.Position = new Vector2(this.Position.X, this.Position.Y + 1);
+            this.CurrentState = PlayerState.WalkDown;
+            InMovement = true;
+            ChangeAnimation("Walk");
+        }
+
+        public void MoveLeft()
+        {
+            this.Position = new Vector2(this.Position.X - 1, this.Position.Y);
+            this.CurrentState = PlayerState.WalkLeft;
+            InMovement = true;
+            ChangeAnimation("Walk");
+        }
+
+        public void MoveRight()
+        {
+            this.Position = new Vector2(this.Position.X + 1, this.Position.Y);
+            this.CurrentState = PlayerState.WalkRight;
+            InMovement = true;
+            ChangeAnimation("Walk");
+        }
+
 
         public void SetupAnimations()
         {
@@ -93,6 +137,7 @@ namespace Wizzard.Engine.Player
                 Name = "Walk"
             });
 
+            InMovement = false;
             ChangeAnimation("Idle");
         }
 
@@ -113,17 +158,29 @@ namespace Wizzard.Engine.Player
 
         public void Update(GameTime gameTime)
         {
+            InMovement = false;
             if (Keyboard.GetState().IsKeyDown(Keys.Down) || Keyboard.GetState().IsKeyDown(Keys.S))
             {
-                CurrentState = PlayerState.WalkDown;
-                ChangeAnimation("Walk");
-                this.Position = new Vector2(this.Position.X, this.Position.Y + 1);
-            }
-            else
-            {
-                ChangeAnimation("Idle");
+                MoveDown();
             }
 
+            if (Keyboard.GetState().IsKeyDown(Keys.Up) || Keyboard.GetState().IsKeyDown(Keys.W))
+            {
+                MoveUp();
+            }
+
+            if (Keyboard.GetState().IsKeyDown(Keys.Left) || Keyboard.GetState().IsKeyDown(Keys.A))
+            {
+                MoveLeft();
+            }
+
+            if (Keyboard.GetState().IsKeyDown(Keys.Right) || Keyboard.GetState().IsKeyDown(Keys.D))
+            {
+                MoveRight();
+            }
+
+            if (!InMovement)
+                ChangeAnimation("Idle");
             CurrentAnimation.Update(gameTime);
         }
 

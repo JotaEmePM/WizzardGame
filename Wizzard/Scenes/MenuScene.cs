@@ -18,7 +18,7 @@ namespace Wizzard.Scenes
             GameNameLabel = new Label("Hello world", new Vector2(200, 200), Globals.BaseSpriteFont, Color.White);
 
 
-            player = new Player("TEST_PLAYER", Job.Archer);
+            player = new Player("TEST_PLAYER", Job.Knight);
 
             this.UnitManager = new UnitManager();
             this.UnitManager.Add(GameNameLabel);
