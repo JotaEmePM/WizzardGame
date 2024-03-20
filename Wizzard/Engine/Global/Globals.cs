@@ -22,6 +22,7 @@ namespace Wizzard.Engine.Globals
         public static SpriteBatch SpriteBatch;
         public static ContentManager ContentManager;
         public static SceneManager SceneManager;
+        public static GraphicsDevice GraphicsDevice;
 
         public static SpriteFont BaseSpriteFont;
 

@@ -116,7 +116,7 @@ namespace Wizzard.Engine.Player
             if (Keyboard.GetState().IsKeyDown(Keys.Down) || Keyboard.GetState().IsKeyDown(Keys.S))
             {
                 CurrentState = PlayerState.WalkDown;
-                ChangeAnimation("WalkDown");
+                ChangeAnimation("Walk");
                 this.Position = new Vector2(this.Position.X, this.Position.Y + 1);
             }
             else
