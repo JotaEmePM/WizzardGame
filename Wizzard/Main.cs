@@ -1,19 +1,23 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System;
 using Wizzard.Engine;
+using Wizzard.Engine.Globals;
 using Wizzard.Scenes;
 
 namespace Wizzard
 {
     public class Main : Game
     {
+        public bool DebugMode { get; set; }
+
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
 
         SceneManager _sceneManager;
 
-        public Main()
+        public Main(Boolean debugMode)
         {
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
@@ -21,9 +25,7 @@ namespace Wizzard
 
             _sceneManager = new SceneManager();
 
-
-
-
+            this.DebugMode = debugMode;
         }
 
         protected override void Initialize()

@@ -2,7 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 
-namespace Wizzard.Engine
+namespace Wizzard.Engine.Globals
 {
     public static class Globals
     {

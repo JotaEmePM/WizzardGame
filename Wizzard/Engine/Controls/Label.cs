@@ -11,11 +11,14 @@ namespace Wizzard.Engine.Controls
             this.Position = position;
             this.Font = font;
             this.Color = color;
+
+            this.Visible = true;
         }
 
         public override void Draw(GameTime gameTime)
         {
-            Globals.SpriteBatch.DrawString(Font, Text, Position, Color);
+            if (this.Visible && !string.IsNullOrEmpty(this.Text))
+                Globals.Globals.SpriteBatch.DrawString(Font, Text, Position, Color);
         }
 
         public override void LoadContent()
