@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework.Input;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Input;
 using Wizzard.Engine.Global.Utility;
 using Wizzard.Engine.Interfaces;
 using IUpdateable = Wizzard.Engine.Interfaces.IUpdateable;
@@ -58,7 +59,7 @@ namespace Wizzard.Engine.Input
             IsActive = false;
         }
 
-        public void Update()
+        public void Update(GameTime gameTime)
         {
             if (IsActive == false)
                 return;
